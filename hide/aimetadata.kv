@@ -1,0 +1,101 @@
+#:kivy 2.0.0
+
+<MetadataDisplay>:
+    orientation: 'vertical'
+    padding: dp(10)
+    spacing: dp(10)
+
+    TabbedPanel:
+        id: tab_panel
+        do_default_tab: False
+        
+        TabbedPanelItem:
+            text: 'Metadata Tree'
+            BoxLayout:
+                orientation: 'vertical'
+                spacing: dp(5)
+                
+                BoxLayout:
+                    size_hint_y: None
+                    height: dp(40)
+                    spacing: dp(5)
+                    
+                    TextInput:
+                        id: tree_search
+                        size_hint_x: 0.7
+                        multiline: False
+                        hint_text: 'Search metadata (Ctrl+F)'
+                        on_text_validate: root.search_tree(self.text)
+                    
+                    Button:
+                        size_hint_x: 0.3
+                        text: 'Find Next (Ctrl+G)'
+                        on_release: root.search_tree_next()
+                
+                ScrollView:
+                    id: tree_scroll
+                    TreeView:
+                        id: metadata_tree
+                        hide_root: True
+                        size_hint_y: None
+                        height: self.minimum_height
+        
+        TabbedPanelItem:
+            text: 'AI Prompt'
+            BoxLayout:
+                orientation: 'vertical'
+                spacing: dp(5)
+                
+                BoxLayout:
+                    size_hint_y: None
+                    height: dp(40)
+                    spacing: dp(5)
+                    
+                    TextInput:
+                        id: prompt_search
+                        size_hint_x: 0.7
+                        multiline: False
+                        hint_text: 'Search prompt (Ctrl+F)'
+                        on_text_validate: root.search_text(prompt_text, self.text)
+                    
+                    Button:
+                        size_hint_x: 0.3
+                        text: 'Find Next (Ctrl+G)'
+                        on_release: root.search_text_next(prompt_text, prompt_search.text)
+                
+                TextInput:
+                    id: prompt_text
+                    readonly: True
+                    
+        TabbedPanelItem:
+            text: 'Raw JSON'
+            BoxLayout:
+                orientation: 'vertical'
+                spacing: dp(5)
+                
+                BoxLayout:
+                    size_hint_y: None
+                    height: dp(40)
+                    spacing: dp(5)
+                    
+                    TextInput:
+                        id: json_search
+                        size_hint_x: 0.7
+                        multiline: False
+                        hint_text: 'Search JSON (Ctrl+F)'
+                        on_text_validate: root.search_text(json_text, self.text)
+                    
+                    Button:
+                        size_hint_x: 0.3
+                        text: 'Find Next (Ctrl+G)'
+                        on_release: root.search_text_next(json_text, json_search.text)
+                
+                TextInput:
+                    id: json_text
+                    readonly: True
+    
+    Label:
+        id: status_bar
+        size_hint_y: None
+        height: dp(30)
+        text: 'Ready' 
